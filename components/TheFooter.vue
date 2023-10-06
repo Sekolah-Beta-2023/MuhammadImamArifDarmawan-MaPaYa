@@ -1,31 +1,58 @@
 <template>
-  <footer class="footer">
-    <h4 class="name">Muhammad Imam Arif Darmawan</h4>
-    <p class="description"><span>Hallo</span> Saya adalah mahasiswa semester 5 jurusan Teknik Informatika di Politeknik Negeri Indramayu.
-    saya Memiliki ketertarikan tinggi pada bidang Web Programming. </p>
-    <p class="credit">created by <span>Muhammad Imam arif darmawan</span> &copy; 2023 </p>
+  <footer class="footer pt-4">
+      <div class="row">
+        <div class="col-md-4 text-start ps-5 col-12">
+          <h1>Makan apa ya Hari ini?</h1>
+          <p>Menyediakan Berbagai macam resep masakan</p>
+        </div>
+        <div class="col-md-2 text-start offset-md-1 col-12">
+        <ul class="nav-footer">
+        <li>
+          <nuxt-link class="nav-footer-link" to="/">Beranda</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link class="nav-footer-link" to="/menu">Bahan Masakan</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link class="nav-footer-link"  to="/blog">Resep</nuxt-link>
+        </li>
+        </ul>
+        </div>
+        <div class="col-md-2 text-start offset-md-2 col-12 ps-5">
+          <h5>Get Connected</h5>
+          <ul class="list-unstyled">
+            <li>Indramayu</li>
+            <li>Indonesia</li>
+            <li>mapaya@gmail.com</li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6 ps-5">
+          <p>Copyright 2023 Mapaya</p>
+        </div>
+        <div class="col-md-6">
+        </div>
+      </div>
   </footer>
 </template>
 
 <style scoped>
   .footer{
-    color: #fefefe;
-    background: var(--color3);
-    padding: 2rem 0 ;
-    text-align: center;
+    background: #F7E1AE;
   }
-  .footer .name{
-    font-weight: 400;
+  .nav-footer{
+    list-style-type: none;
   }
-  .footer .description{
-        margin: 0 auto;
-        max-width: 650px;
-        padding-bottom: 20px;
+  .nav-footer li{
+    padding-bottom:10px;
   }
-  .footer .credit{
-    font-weight: 600;
+  .nav-footer-link{
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
   }
-
 </style>
 
 

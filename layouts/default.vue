@@ -9,10 +9,12 @@
 </template>
 <style>
   :root{
-    --color1 : #ECE7B4;
-    --color2 : #F3EFCC;
-    --color3: #32502E;
+    --bg-color-1 : #FFF8D6;
+    --bg-color-2 : #F7E1AE;
+    --bg-color-3 : #FFFDE3;
+    --text-color: #32502E;
     --color4: #406343;
+
 
   }
   #app{

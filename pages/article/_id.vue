@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row pt-5 pb-5 ">
       <div class="col-lg-5 col-12">
-        <img class="blog-img" src="../assets/images/telurpuyuhsantan.jpg">
+        <img class="blog-img" src="../../assets/images/telurpuyuhsantan.jpg">
       </div>
       <div class="col-lg-6 col-12 ">
         <h3>Telur Puyuh Santan Kemangi</h3>

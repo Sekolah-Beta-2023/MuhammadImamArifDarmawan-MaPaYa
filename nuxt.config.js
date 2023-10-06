@@ -14,8 +14,14 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
             { rel: 'StyleSheet' , href: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"}],
     script: [
-      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"}
+      { src: "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"},
+      {src:"https://kit.fontawesome.com/01bb568c0b.js"}
     ]
+  },
+
+  env: {
+    supabaseApi: process.env.SUPABASE_API,
+    supabaseKey: process.env.SUPABASE_KEY,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -42,7 +48,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.SUPABASE_API,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
