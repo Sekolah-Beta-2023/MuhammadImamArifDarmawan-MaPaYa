@@ -54,7 +54,9 @@
     <section id="article">
       <div class="container">
       <h2 class="text-start mb-2">Artikel Terbaru</h2>
+      <div v-if="user">
       <nuxt-link class="btn mb-3 text-end" style="background-color: #F7E1AE;" to="/form/tambah">Tambah Article</nuxt-link>
+      </div>
       <div class="row article-row">
         <TheCard
           v-for="(item, index) of products"
@@ -65,10 +67,12 @@
           :image="item?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${item?.image}`: 'https://img.freepik.com/free-photo/sausage-fried-rice-with-tomatoes-carrots-shiitake-mushrooms-plate_1150-27184.jpg?'"
         />
       </div>
-            <h2 class="text-start mb-2">
+        <h2 class="text-start mb-2">
         Informasi Gizi
       </h2>
-      <nuxt-link class="btn mb-3 text-end" style="background-color: #F7E1AE;" to="/form/tambah-information">Tambah Informasi Gizi</nuxt-link>
+      <div v-if="user">
+          <nuxt-link class="btn mb-3 text-end" style="background-color: #F7E1AE;" to="/form/tambah-information">Tambah Informasi Gizi</nuxt-link>
+      </div>
       <div class="row informations-row">
       <div class="col-lg-4  text-center mb-sm-5 mx-auto  " v-for="information of informations" :key="information?.id">
       <div class="card mx-auto"  >
@@ -79,9 +83,10 @@
           <p class="card-subcontent text-start ">{{information.protein}}</p>
           <p class="card-subcontent text-start ">{{information.lemak}}</p>
           <p class="card-subcontent text-start " style="padding-bottom:20px">{{information.karbohidrat}}</p>
-
+            <div v-if="user">
             <nuxt-link type="button" class="btn text-center" style="background-color: #F7E1AE;" :to="`/form/${information?.id}/edit-information`">Edit information</nuxt-link>
             <button type="button" @click="handleDelete(information?.id)" class="btn btn-danger">Delete information</button>
+            </div>
         </div>
       </div>
       </div>
@@ -103,10 +108,12 @@
     },
     data() {
         return {
-            originalAPI: this.supabaseApi
+          item: '',
+           originalAPI: this.supabaseApi
         }
     },
     computed: {
+        ...mapState('auth', ['user']),
         ...mapState('products', ['products']),
         ...mapState('informations', ['informations'])
     },

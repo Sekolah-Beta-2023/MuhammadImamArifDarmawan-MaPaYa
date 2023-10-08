@@ -24,6 +24,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
+  middleware: 'auth',
     data() {
         return {
             formProduct: {
@@ -63,7 +64,7 @@ export default {
             try {
                 const formData = new FormData();
                 const file = document.querySelector("input[type=file]");
-                formData.append('data-binary', file.files);
+                formData.append('data-binary', file.files[0]);
                 await this.uploadFile({ file: `images/${Date.now()}.${file.files[0].name.split('.')[1]}`, body: formData, })
                 this.formProduct.image.push(this.image)
             } catch (error) {

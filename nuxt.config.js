@@ -31,6 +31,7 @@ export default {
   plugins: [
     '~/plugins/axios',
     '~/plugins/original',
+    '~/plugins/auth',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

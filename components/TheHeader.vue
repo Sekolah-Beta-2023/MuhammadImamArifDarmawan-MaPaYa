@@ -21,9 +21,39 @@
         </li>
       </ul>
     </div>
+    <div v-if="user">
+          <button type="button" @click="handleLogout()" class="btn">Sign Out</button>
+    </div>
+    <div v-else>
+            <nuxt-link class="btn" to="/auth/signup">Register</nuxt-link>
+            <nuxt-link class="btn" to="/auth/signin">Log In</nuxt-link>
+    </div>
   </div>
 </nav>
 </template>
+<script>
+import { mapState, mapActions } from "vuex";
+
+export default {
+    computed: {
+        ...mapState('auth', ['user'])
+    },
+    mounted() {
+        // this.fetchMe()
+    },
+    methods: {
+        ...mapActions('auth', ['logout']),
+        async handleLogout() {
+            try {
+                await this.logout();
+                this.$router.push('/auth/signin')
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+}
+</script>
 <style scoped>
   nav{
     padding: 1rem;
@@ -40,9 +70,6 @@
   /* .navbar-brand span{
     color: var(--color1);
   } */
-
-
-
 </style>
 
 

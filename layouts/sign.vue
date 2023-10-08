@@ -1,14 +1,11 @@
 <template>
-  <div id="app">
-    <the-header></the-header>
-
-    <Nuxt />
-
-    <the-footer></the-footer>
-  </div>
+<div id="app" >
+  <Nuxt />
+</div>
 </template>
 
 <script>
+
 export default {
     mounted() {
         if(!process.client) return;
@@ -21,19 +18,11 @@ export default {
     }
 }
 </script>
-<style>
-  :root{
-    --bg-color-1 : #FFF8D6;
-    --bg-color-2 : #F7E1AE;
-    --bg-color-3 : #FFFDE3;
-    --text-color: #32502E;
-    --color4: #406343;
 
-
-  }
+<style scoped>
   #app{
-    font-size: 16px;
+    padding: 7em 0;
+    background: #f8f9fd;
+    min-height: 100vh;
   }
 </style>
-
-
