@@ -1,60 +1,70 @@
 <template>
+<div id="edit">
   <div class="container">
-    <form id="tambah-artikel" @submit.prevent="onFormSubmit">
-      <input id="id" v-model="articleId" type="hidden" class="form-control" name="id">
+    <form id="tambah-artikel" @submit.prevent="onSubmit($event)">
+      <h3 class="pt-3">Edit Artikel</h3>
       <div class="form-group">
         <label for="title">Judul Artikel</label>
-        <input id="title" v-model="title" type="text" class="form-control" name="title">
+        <input id="title" v-model="formProduct.title" type="text" class="form-control" name="title">
       </div>
       <div class="form-group">
-        <label for="content">Example textarea</label>
-        <textarea id="content" v-model="content" class="form-control" name="content" rows="3"></textarea>
+        <label for="content">Isi Artikel</label>
+        <textarea id="content" v-model="formProduct.content" class="form-control" name="content" rows="3"></textarea>
       </div>
-      <button class="btn btn-primary" type="submit">Edit Artikel</button>
+      <button class="btn mt-3" style="background-color:#F7E1AE" type="submit">Edit Artikel</button>
     </form>
   </div>
+</div>
 </template>
 <script>
-import httpClient from "~/utils/httpClient"
+import { mapActions, mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      title: "",
-      content: "",
-      articleId: "",
-    }
-  },
-  mounted() {
-    const params = this.$route.params
-    this.getDetailData(params?.id)
-  },
-  methods: {
-    async getDetailData(articleId) {
-      const response = await httpClient("/rest/v1/article?id=eq." + articleId, "GET")
-      const data = await response.json()
-      this.title = data[0]?.title
-      this.content = data[0]?.content
-      this.articleId = data[0]?.id
+    async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+      const product_id = params?.id
+      const originalApi = env?.supabaseApi;
+      await store.dispatch('products/fetchDetailProduct', product_id)
+        return {
+            product_id,
+            originalApi
+        }
     },
-    async onFormSubmit() {
-      const dataForm = {
-        title: document.getElementById("title").value,
-        content: document.getElementById("content").value,
+    data() {
+      return {
+        formProduct: {
+          title: '',
+          content: '',
+        }
       }
-
-      // const response = await httpClient("/rest/v1/article?id=eq." + this.articleId, "PATCH", JSON.stringify(dataForm))
-       const response = await fetch("https://xjjeyccncvvwigqgsrrg.supabase.co/rest/v1/article?id=eq." + this.articleId,{
-        method: "PATCH",
-        headers: {
-          apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqamV5Y2NuY3Z2d2lncWdzcnJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY0NzE3NjEsImV4cCI6MjAxMjA0Nzc2MX0.F2Kx403IhhG_8zQXshNnrXv5AM71DtTl2lnLEMBbEZ8",
-          "Content-Type": "application/json",
-          prefer: "return=representation",
-        },
-        body: JSON.stringify(dataForm)
-      })
-      const data =  await response?.json()
-      this.$router.push(`/detail/${data[0]?.id}`)
+    },
+    mounted() {
+        this.setInitialForm()
+    },
+    computed: {
+        ...mapState('products', ['product'])
+    },
+    methods: {
+        ...mapActions('products', ['editProduct','fetchDetailProduct']),
+        async onSubmit(){
+          try {
+            await this.editProduct({id: this.product_id, body : this.formProduct});
+            setTimeout(() => {
+                    this.$router.push(`/detail/${this.product_id}`);
+                }, 2000)
+            } catch (error) {
+                console.error(error)
+            }
+          },
+          setInitialForm(){
+            this.formProduct.title = this.product?.title || ''
+            this.formProduct.content = this.product?.content || ''
+          },
+        }
     }
-  }
-}
+
 </script>
+<style scoped>
+  #edit{
+    background: var(--bg-color-3);
+    min-height: 100vh;
+  }
+</style>

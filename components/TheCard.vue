@@ -1,9 +1,6 @@
 <template>
    <div class="col-lg-4  text-center mb-sm-5 mx-auto ">
       <div class="card mx-auto" >
-        <!-- <p>
-          {{image}}
-        </p> -->
         <img class="rounded-t-lg w-full h-[200px] object-cover" :src="image" alt="" />
         <div class="card-body">
           <h5 class="card-title text-start">{{title}}</h5>

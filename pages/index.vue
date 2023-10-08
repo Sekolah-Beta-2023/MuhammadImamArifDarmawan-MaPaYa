@@ -57,41 +57,34 @@
       <nuxt-link class="btn mb-3 text-end" style="background-color: #F7E1AE;" to="/form/tambah">Tambah Article</nuxt-link>
       <div class="row article-row">
         <TheCard
-          v-for="(item, index) of articles"
+          v-for="(item, index) of products"
           :key="index"
           :title="item?.title"
           :description=item?.content
           :article-id="item?.id"
-          :image="item?.image?.length > 0 ? `${supabaseApi}/storage/v1/object/public/${item?.image}`: 'https://flowbite.com/docs/images/blog/image-1.jpg'"
+          :image="item?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${item?.image}`: 'https://img.freepik.com/free-photo/sausage-fried-rice-with-tomatoes-carrots-shiitake-mushrooms-plate_1150-27184.jpg?'"
         />
+      </div>
+            <h2 class="text-start mb-2">
+        Informasi Gizi
+      </h2>
+      <nuxt-link class="btn mb-3 text-end" style="background-color: #F7E1AE;" to="/form/tambah-information">Tambah Informasi Gizi</nuxt-link>
+      <div class="row informations-row">
+      <div class="col-lg-4  text-center mb-sm-5 mx-auto  " v-for="information of informations" :key="information?.id">
+      <div class="card mx-auto"  >
+        <img class="rounded-t-lg w-full h-[200px] object-cover" :src="item?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${item?.image}`: 'https://img.freepik.com/free-photo/delicious-goulash-stew-table_23-2149371744.jpg?'" alt="" />
+        <div class="card-body">
+          <h5 class="card-title text-start">{{information.title}}</h5>
+          <p class="card-subcontent text-start ">{{information.energi}}</p>
+          <p class="card-subcontent text-start ">{{information.protein}}</p>
+          <p class="card-subcontent text-start ">{{information.lemak}}</p>
+          <p class="card-subcontent text-start " style="padding-bottom:20px">{{information.karbohidrat}}</p>
 
-      <!-- <div class="col-lg-4  text-center mb-sm-5 mx-auto ">
-      <div class="card mx-auto" >
-        <img src="../assets/images/hero1.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-start">Cara Membuat Rendang</h5>
-          <a href="#">Lihat Selengkapnya</a>
-        </div>
+            <nuxt-link type="button" class="btn text-center" style="background-color: #F7E1AE;" :to="`/form/${information?.id}/edit-information`">Edit information</nuxt-link>
+            <button type="button" @click="handleDelete(information?.id)" class="btn btn-danger">Delete information</button>
         </div>
       </div>
-      <div class="col-lg-4 text-center mb-sm-5 mx-auto">
-      <div class="card mx-auto" >
-        <img src="../assets/images/hero1.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-start">Cara Membuat Rendang</h5>
-          <a href="#">Lihat Selengkapnya</a>
-        </div>
-        </div>
       </div>
-      <div class="col-lg-4  text-center mb-sm-5 mx-auto ">
-      <div class="card mx-auto" >
-        <img src="../assets/images/hero1.jpg" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-start">Cara Membuat Rendang</h5>
-          <nuxt-link :to="'/article/1'">Lihat Selengkapnya</nuxt-link>
-        </div>
-        </div>
-      </div> -->
       </div>
       </div>
     </section>
@@ -99,33 +92,45 @@
 </template>
 
 <script>
-  // import { mapActions, mapState } from 'vuex'
-  import TheCard from "../components/TheCard.vue";
+  import { mapActions, mapState } from 'vuex'
 
   export default {
-    name: 'IndexPage',
-    components: { TheCard },
-    data() {
-      return {
-        supabaseApi: process.env.supabaseApi,
-        articles: [],
-      }
+    async asyncData({isDev, route, store, env, params, query, req, res, redirect, error})
+    {
+        return {
+            originalApi: env?.supabaseApi
+        }
     },
-    mounted(){
-      this.getArticles();
+    data() {
+        return {
+            originalAPI: this.supabaseApi
+        }
+    },
+    computed: {
+        ...mapState('products', ['products']),
+        ...mapState('informations', ['informations'])
+    },
+    mounted() {
+        this.fetchProducts()
+        this.fetchInformations()
+        this.setOriginalApi();
     },
     methods: {
-      async getArticles() {
-        const response = await this.$axios.get("/rest/v1/article", {
-          headers: {
-            apikey: process.env.supabaseKey
-          }
-        })
-
-        this.articles = response?.data
-      },
+        ...mapActions('products', ['fetchProducts']),
+        ...mapActions('informations', ['fetchInformations', 'removeInformation']),
+        async handleDelete(informationId) {
+            try {
+                await this.removeInformation(informationId);
+                this.fetchInformations()
+            } catch (error) {
+                console.error(error)
+            }
+        },
+        setOriginalApi() {
+            this.processEnv = this.originalApi
+        }
     }
-  }
+}
 </script>
 
 
@@ -170,7 +175,9 @@
 
 
   /* article section */
-  .article-row{
+  .article-row,
+  .informations-row
+  {
     /* max-height: 400px; */
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -185,6 +192,11 @@
   .article-row::scrollbar{
     display: none;
   }
+  .informations-row::-webkit-scrollbar{
+      display: none;
+  }
+
+
   /* HIDE SCROLL BAR */
     *{ scrollbar-width: none }
 
@@ -193,10 +205,10 @@
     background: var(--bg-color-1);
   }
 
-  .card-title{
-    text-decoration: underline;
-    padding-bottom: 150px;
+  .card-subcontent{
+    margin: 0;
   }
+
 
   .card-body a{
     color: black;
