@@ -3,13 +3,15 @@
   <div class="container">
     <div class="row pt-5 pb-5 ">
       <div class="col-lg-5 col-12 mb-3">
-        <img class="blog-img" :src="product?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/${product?.image}`: 'https://flowbite.com/docs/images/blog/image-1.jpg'">
+        <img class="blog-img" :src="article?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${article?.image}`: 'https://img.freepik.com/free-photo/sausage-fried-rice-with-tomatoes-carrots-shiitake-mushrooms-plate_1150-27184.jpg?'">
       </div>
       <div class="col-lg-6 col-12">
+        <div v-if="user">
             <button type="button" class="btn text-center" style="background-color: #F7E1AE;" @click="onEdit">Edit artikel</button>
-            <button type="button" @click="handleDelete(product?.id)" class="btn btn-danger">Delete artikel</button>
-        <h3>{{ product?.title }}</h3>
-        <p>{{ product?.content }}</p>
+            <button type="button" @click="handleDelete(article?.id)" class="btn btn-danger">Delete artikel</button>
+        </div>
+        <h3>{{ article?.title }}</h3>
+        <p v-html="article?.content"></p>
       </div>
     </div>
   </div>
@@ -51,25 +53,26 @@ import { mapActions, mapState } from 'vuex'
 export default {
     async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         return {
-            product_id: params?.id,
+            article_id: params?.id,
             originalApi: env?.supabaseApi
         }
     },
     computed: {
-        ...mapState('products', ['product']),
+        ...mapState('auth', ['user']),
+        ...mapState('articles', ['article']),
         // ...mapState('comments', ['comment']),
     },
     mounted() {
-        this.fetchDetailProduct(this.product_id);
+        this.fetchDetailArticle(this.article_id);
     },
     methods: {
-        ...mapActions('products', ['fetchDetailProduct', 'removeProduct']),
+        ...mapActions('articles', ['fetchDetailArticle', 'removeArticle']),
       onEdit() {
-      this.$router.push(`/form/${this.product_id}/edit`)
+      this.$router.push(`/form/${this.article_id}/edit`)
     },
-    async handleDelete(productId) {
+    async handleDelete(articleId) {
             try {
-                await this.removeProduct(productId);
+                await this.removeArticle(articleId);
                 setTimeout(() => {
                     this.$router.push("/");
                 },2000)

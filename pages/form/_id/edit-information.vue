@@ -2,28 +2,28 @@
 <div id="edit">
   <div class="container">
     <form id="tambah-artikel" @submit.prevent="onSubmit($event)">
-      <h3 class="pt-3">Edit Artikel</h3>
+      <h3 class="pt-3">Edit Informasi gizi</h3>
       <div class="form-group">
         <label for="title">Judul Artikel</label>
-        <input id="title" v-model="formProduct.title" type="text" class="form-control" name="title">
+        <input id="title" v-model="formArticle.title" type="text" class="form-control" name="title">
       </div>
       <div class="form-group">
-        <label for="energi">Energi</label>
-        <input id="energi" v-model="formProduct.energi" type="text" class="form-control" name="energi">
+        <label for="energi">Energi &#40; KKal &#41;</label>
+        <input id="energi" v-model="formArticle.energi" type="text" class="form-control" name="energi">
       </div>
       <div class="form-group">
-        <label for="protein">Protein</label>
-        <input id="protein" v-model="formProduct.protein" type="text" class="form-control" name="protein">
+        <label for="protein">Protein &#40; gram &#41;</label>
+        <input id="protein" v-model="formArticle.protein" type="text" class="form-control" name="protein">
       </div>
       <div class="form-group">
-        <label for="lemak">Lemak</label>
-        <input id="lemak" v-model="formProduct.lemak" type="text" class="form-control" name="lemak">
+        <label for="lemak">Lemak &#40; gram &#41;</label>
+        <input id="lemak" v-model="formArticle.lemak" type="text" class="form-control" name="lemak">
       </div>
       <div class="form-group">
-        <label for="karbohidrat">Karbohidrat</label>
-        <input id="karbohidrat" v-model="formProduct.karbohidrat" type="text" class="form-control" name="karbohidrat">
+        <label for="karbohidrat">Karbohidrat &#40; gram &#41;</label>
+        <input id="karbohidrat" v-model="formArticle.karbohidrat" type="text" class="form-control" name="karbohidrat">
       </div>
-      <button class="btn mt-3" style="background-color:#F7E1AE" type="submit">Simpan information</button>
+      <button class="btn mt-3" style="background-color:#F7E1AE" type="submit">Simpan informasi Gizi</button>
     </form>
   </div>
 </div>
@@ -42,7 +42,7 @@ export default {
     },
     data() {
       return {
-        formProduct: {
+        formArticle: {
           title: '',
           energi: '',
           protein: '',
@@ -63,7 +63,7 @@ export default {
           try {
             await this.editInformation({
               id: this.information_id,
-              body : this.formProduct
+              body : this.formArticle
             });
             setTimeout(() => {
                     this.$router.push(`/`);
@@ -73,11 +73,11 @@ export default {
             }
           },
           setInitialForm(){
-            this.formProduct.title = this.information?.title
-            this.formProduct.energi = this.information?.energi
-            this.formProduct.protein = this.information?.protein
-            this.formProduct.lemak = this.information?.lemak
-            this.formProduct.karbohidrat = this.information?.karbohidrat
+            this.formArticle.title = this.information?.title
+            this.formArticle.energi = this.information?.energi
+            this.formArticle.protein = this.information?.protein
+            this.formArticle.lemak = this.information?.lemak
+            this.formArticle.karbohidrat = this.information?.karbohidrat
           },
         }
     }

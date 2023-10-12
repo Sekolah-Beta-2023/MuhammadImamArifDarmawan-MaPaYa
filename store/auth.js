@@ -5,13 +5,11 @@ export default {
   namespaced: true,
   state () {
       return {
+        // user: process.server ? '' : JSON.parse(localStorage.getItem('user')),
         user: process.server ? null : JSON.parse(localStorage.getItem('user')),
         access_token: null,
         refresh_token: null,
         isLoggedIn: false,
-
-        currentPage: 1, // Halaman saat ini untuk ayat
-        perPage: 10,
 
         status: false,
         message: '',
@@ -34,9 +32,9 @@ export default {
       state.isLoggedIn = true;
     },
     RESET_TOKEN(state) {
-      state.user = null;
-      state.access_token = null;
-      state.refresh_token = null;
+      state.user =null;
+      state.access_token =null;
+      state.refresh_token =null;
       localStorage.clear();
     },
   },

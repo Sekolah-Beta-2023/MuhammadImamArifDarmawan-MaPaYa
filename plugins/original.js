@@ -10,8 +10,7 @@ export default ({ app, store }) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type'
       },
-      Authorization: process.server ? '' : `Bearer ${localStorage.getItem('access_token')}`,
-      // Authorization: `Bearer ${process?.env?.supabaseKey}`,
+      Authorization : process.server ? '' :  `Bearer` + (localStorage.getItem('access_token')),
     }
   })
   // Set baseURL to something different

@@ -1,11 +1,11 @@
-import { createProduct, deleteProduct, getDetailProduct, getProducts, updateProduct,getCommentProduct } from '~/api/v1/products';
+import { createArticle, deleteArticle, getDetailArticle, getArticles, updateArticle,getCommentArticle } from '~/api/v1/articles';
 
 export default {
   namespaced: true,
   state () {
       return {
-        products: [],
-        product: null,
+        articles: [],
+        article: null,
 
         currentPage: 1, // Halaman saat ini untuk ayat
         perPage: 10,
@@ -22,56 +22,56 @@ export default {
       state.message = message;
       state.status = status;
     },
-    SET_PRODUCTS(state, products) {
-      state.products = products;
+    SET_ARTICLES(state, articles) {
+      state.articles = articles;
     },
-    SET_PRODUCT(state, product) {
-      state.product = product;
+    SET_ARTICLE(state, article) {
+      state.article = article;
     },
   },
   actions: {
-      async fetchProducts({ commit }) {
+      async fetchArticles({ commit }) {
         try {
-            const response = await getProducts();
+            const response = await getArticles();
             if(response.status === 200) {
-              const products = response?.data
+              const articles = response?.data
               const { status, statusText } = response;
               commit('SET_RESPONSE', { statusText, status });
-              commit('SET_PRODUCTS', products)
+              commit('SET_ARTICLES', articles)
             }
         } catch (error) {
             console.error(error);
         }
       },
-      async fetchDetailProduct({ commit }, id) {
+      async fetchDetailArticle({ commit }, id) {
         try {
-            const response = await getDetailProduct(id);
+            const response = await getDetailArticle(id);
             if(response.status === 200) {
-              const product = response?.data
+              const article = response?.data
               const { status, statusText } = response;
               commit('SET_RESPONSE', { statusText, status });
-              commit('SET_PRODUCT', product[0])
+              commit('SET_ARTICLE', article[0])
             }
         } catch (error) {
             console.error(error);
         }
       },
-      async fetchCommentProduct({ commit }, id) {
+      async fetchCommentArticle({ commit }, id) {
         try {
-            const response = await getCommentProduct(id);
+            const response = await getCommentArticle(id);
             if(response.status === 200) {
-              const products = response?.data
+              const articles = response?.data
               const { status, statusText } = response;
               commit('SET_RESPONSE', { statusText, status });
-              commit('SET_PRODUCT', products)
+              commit('SET_ARTICLE', articles)
             }
         } catch (error) {
             console.error(error);
         }
       },
-      async storeProduct({ commit }, body) {
+      async storeArticle({ commit }, body) {
         try {
-          const response = await createProduct(body);
+          const response = await createArticle(body);
           console.log(response);
           if(response.status === 200) {
             const { status, statusText } = response
@@ -81,9 +81,9 @@ export default {
           console.error(error);
         }
       },
-      async editProduct({ commit }, { id, body }) {
+      async editArticle({ commit }, { id, body }) {
         try {
-          const response = await updateProduct(id, body);
+          const response = await updateArticle(id, body);
           if(response.status === 200) {
             const { status, statusText } = response
             commit('SET_RESPONSE', { statusText, status });
@@ -92,9 +92,9 @@ export default {
           console.error(error);
         }
       },
-      async removeProduct({ commit }, id) {
+      async removeArticle({ commit }, id) {
         try {
-          const response = await deleteProduct(id);
+          const response = await deleteArticle(id);
           console.log(response);
           if(response.status === 200) {
             const { status, statusText } = response

@@ -2,9 +2,9 @@
    <div class="col-lg-4  text-center mb-sm-5 mx-auto ">
       <div class="card mx-auto" >
         <img class="rounded-t-lg w-full h-[200px] object-cover" :src="image" alt="" />
-        <div class="card-body">
+        <div class="card-body" >
           <h5 class="card-title text-start">{{title}}</h5>
-          <p class="card-content text-start ">{{description}}</p>
+          <p class="card-content text-start " v-html="cara_membuat.substring(0,150)+'...'"></p>
           <nuxt-link :to="`/detail/${articleId}`">Lihat Selengkapnya</nuxt-link>
         </div>
       </div>
@@ -18,7 +18,7 @@
         type: String,
         default: ""
       },
-      description: {
+      cara_membuat: {
         type: String,
         default: ""
       },

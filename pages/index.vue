@@ -6,9 +6,7 @@
         <div class="row">
           <div class="col-12 text-center">
             <h2>Kumpulan Resep</h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur repellendus architecto rem quis
-              corrupti quos possimus, doloribus, hic sunt reprehenderit totam quam, tenetur vel accusantium et
-              voluptatibus nulla aperiam delectus.</p>
+            <p>Menyajikan Informasi Mengenai Berbagai Macam resep masakan dan juga Informasi gizi pada masakan dan bahan masakan</p>
           </div>
         </div>
         <div class="row mt-5">
@@ -20,8 +18,7 @@
                   alt="">
               </div>
               <h3>Resep masakan enak</h3>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Culpa, natus Lorem ipsum dolor sit amet.!</p>
+              <p>Resep Masakan Sudah Terjamin Karena sudah di coba oleh para pakar makanan!</p>
             </div>
           </div>
           <div class="col-lg-4 text-center mb-sm-5">
@@ -32,8 +29,7 @@
                   alt="">
               </div>
               <h3>Berbagai Jenis resep masakan</h3>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Culpa, natus Lorem ipsum dolor sit amet.!</p>
+              <p>Tersedia Berbagai Jenis resep masakan dari seluruh Dunia.!</p>
             </div>
           </div>
           <div class="col-lg-4 text-center">
@@ -44,8 +40,7 @@
                   alt="">
               </div>
               <h3>Banyak pilihan resep masakan</h3>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Culpa, natus Lorem ipsum dolor sit amet.!</p>
+              <p>Pilih Resep masakan yang di inginkan</p>
             </div>
           </div>
         </div>
@@ -59,10 +54,10 @@
       </div>
       <div class="row article-row">
         <TheCard
-          v-for="(item, index) of products"
+          v-for="(item, index) of articles"
           :key="index"
           :title="item?.title"
-          :description=item?.content
+          :cara_membuat=item?.content
           :article-id="item?.id"
           :image="item?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${item?.image}`: 'https://img.freepik.com/free-photo/sausage-fried-rice-with-tomatoes-carrots-shiitake-mushrooms-plate_1150-27184.jpg?'"
         />
@@ -76,13 +71,13 @@
       <div class="row informations-row">
       <div class="col-lg-4  text-center mb-sm-5 mx-auto  " v-for="information of informations" :key="information?.id">
       <div class="card mx-auto"  >
-        <img class="rounded-t-lg w-full h-[200px] object-cover" :src="item?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${item?.image}`: 'https://img.freepik.com/free-photo/delicious-goulash-stew-table_23-2149371744.jpg?'" alt="" />
+        <img class="rounded-t-lg w-full h-[200px] object-cover" :src="information?.image?.length > 0 ? `${originalApi}/storage/v1/object/public/images/${information?.image}`: 'https://img.freepik.com/free-photo/delicious-goulash-stew-table_23-2149371744.jpg?'" alt="" />
         <div class="card-body">
           <h5 class="card-title text-start">{{information.title}}</h5>
-          <p class="card-subcontent text-start ">{{information.energi}}</p>
-          <p class="card-subcontent text-start ">{{information.protein}}</p>
-          <p class="card-subcontent text-start ">{{information.lemak}}</p>
-          <p class="card-subcontent text-start " style="padding-bottom:20px">{{information.karbohidrat}}</p>
+          <p class="card-subcontent text-start "> Energi  : {{information.energi}} <strong>&#40; KKal &#41;</strong> </p>
+          <p class="card-subcontent text-start "> Protein : {{information.protein}} <strong> &#40; gram &#41;</strong> </p>
+          <p class="card-subcontent text-start "> lemak   : {{information.lemak}} <strong>&#40; gram &#41;</strong></p>
+          <p class="card-subcontent text-start " style="padding-bottom:20px"> Karbohidrat  : {{information.karbohidrat}} <strong>&#40; gram &#41;</strong></p>
             <div v-if="user">
             <nuxt-link type="button" class="btn text-center" style="background-color: #F7E1AE;" :to="`/form/${information?.id}/edit-information`">Edit information</nuxt-link>
             <button type="button" @click="handleDelete(information?.id)" class="btn btn-danger">Delete information</button>
@@ -114,16 +109,16 @@
     },
     computed: {
         ...mapState('auth', ['user']),
-        ...mapState('products', ['products']),
+        ...mapState('articles', ['articles']),
         ...mapState('informations', ['informations'])
     },
     mounted() {
-        this.fetchProducts()
+        this.fetchArticles()
         this.fetchInformations()
         this.setOriginalApi();
     },
     methods: {
-        ...mapActions('products', ['fetchProducts']),
+        ...mapActions('articles', ['fetchArticles']),
         ...mapActions('informations', ['fetchInformations', 'removeInformation']),
         async handleDelete(informationId) {
             try {

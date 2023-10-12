@@ -13,6 +13,7 @@
             <span class="fa fa-user-o"></span>
           </div>
           <h3 class="text-center mb-4">Sign In</h3>
+          <NotifiCation :message="error" v-if="error" />
           <form  @submit.prevent="onSubmit($event)" class="login-form">
             <div class="mb-3">
               <input type="email" v-model="formSignin.email" name="email"  class="form-control rounded-start" placeholder="email" required="">
@@ -45,13 +46,16 @@
 </template>
 
 <script>
-
+  import NotifiCation from '~/components/NotifiCation'
   import {
     mapActions,
     mapState
   } from 'vuex'
 
   export default {
+    comments: {
+      NotifiCation,
+    },
     layout: 'sign',
     middleware: ['is-not-auth'],
     data() {
@@ -62,7 +66,7 @@
         },
 
         successMessage: '',
-        errors: [],
+        error: null,
       }
     },
     computed: {
@@ -79,7 +83,7 @@
           }, 3000)
         } catch (error) {
           console.error(error);
-          this.errors.push(error.error_description);
+          this.error = "Email atau Password salah"
         }
       }
     },

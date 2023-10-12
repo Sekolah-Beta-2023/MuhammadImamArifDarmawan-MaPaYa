@@ -5,11 +5,11 @@
     <form id="tambah-artikel" @submit.prevent="onSubmit($event)">
       <div class="form-group">
         <label for="title">Judul Artikel</label>
-        <input id="title" type="text"  v-model="formProduct.title" class="form-control" name="title">
+        <input id="title" type="text"  v-model="formArticle.title" class="form-control" name="title">
       </div>
       <div class="form-group">
         <label for="content">Isi Artikel</label>
-        <textarea id="content" v-model="formProduct.content" class="form-control"  name="content" rows="3" ></textarea>
+        <Editor id="content" v-model="formArticle.content" class="form-control"  name="content" rows="3" ></Editor>
       </div>
       <div class="input-group mt-3 mb-3">
         <input id="inputGroupFile02"  name="image" type="file" class="form-control" @change="upload()"  />
@@ -27,10 +27,10 @@ export default {
   middleware: 'auth',
     data() {
         return {
-            formProduct: {
+            formArticle: {
                 title: '',
-                content: '',
-                image:''
+                content:'',
+                image:'',
             }
         }
     },
@@ -41,18 +41,11 @@ export default {
         ...mapState('storage', ['images', 'image'])
     },
     methods: {
-        ...mapActions('products', ['storeProduct']),
+        ...mapActions('articles', ['storeArticle']),
         ...mapActions('storage', ['uploadFile']),
         async onSubmit() {
             try {
-                // const formData = new FormData();
-                // const thumbnailFile = document.querySelector("input[type=file]");
-                // formData.append('name', this.formProduct.name)
-                // formData.append('description', this.formProduct.description)
-                // formData.append('colors', this.formProduct.colors)
-                // formData.append('price', this.formProduct.price)
-                // formData.append('images_product', thumbnailFile.files[0].name)
-                await this.storeProduct(this.formProduct);
+                await this.storeArticle(this.formArticle);
                 setTimeout(() => {
                     this.$router.push("/");
                 }, 2000)
@@ -64,9 +57,9 @@ export default {
             try {
                 const formData = new FormData();
                 const file = document.querySelector("input[type=file]");
-                formData.append('data-binary', file.files[0]);
-                await this.uploadFile({ file: `images/${Date.now()}.${file.files[0].name.split('.')[1]}`, body: formData, })
-                this.formProduct.image.push(this.image)
+                formData.append('data-binary', file);
+                await this.uploadFile({ file: `images/${Date.now()}`, body: formData, })
+                this.formArticle.image.push(this.image)
             } catch (error) {
                 console.error(error)
             }
