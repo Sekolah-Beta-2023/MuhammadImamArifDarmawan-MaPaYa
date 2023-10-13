@@ -5,7 +5,8 @@
       <div class="container">
         <div class="row">
           <div class="col-12 text-center">
-            <h2>Kumpulan Resep</h2>
+            <h2>MaPaYa</h2>
+            <p> <strong>Makan Apa ya ?</strong></p>
             <p>Menyajikan Informasi Mengenai Berbagai Macam resep masakan dan juga Informasi gizi pada masakan dan bahan masakan</p>
           </div>
         </div>
@@ -79,8 +80,8 @@
           <p class="card-subcontent text-start "> lemak   : {{information.lemak}} <strong>&#40; gram &#41;</strong></p>
           <p class="card-subcontent text-start " style="padding-bottom:20px"> Karbohidrat  : {{information.karbohidrat}} <strong>&#40; gram &#41;</strong></p>
             <div v-if="user">
-            <nuxt-link type="button" class="btn text-center" style="background-color: #F7E1AE;" :to="`/form/${information?.id}/edit-information`">Edit information</nuxt-link>
-            <button type="button" @click="handleDelete(information?.id)" class="btn btn-danger">Delete information</button>
+            <nuxt-link type="button" class="btn text-center" style="background-color: #F7E1AE;" :to="`/form/${information?.id}/edit-information`">Edit informasi gizi</nuxt-link>
+            <button type="button" @click="handleDelete(information?.id)" class="btn btn-danger">Delete Informasi GIzi</button>
             </div>
         </div>
       </div>

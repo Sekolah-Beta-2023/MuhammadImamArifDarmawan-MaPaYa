@@ -18,7 +18,7 @@
         </li>
         </ul>
         </div>
-        <div class="col-md-2 text-start offset-md-2 col-12 ps-5">
+        <div class="col-md-2 text-start offset-md-1 col-12">
           <h5>Get Connected</h5>
           <ul class="list-unstyled">
             <li>Indramayu</li>
