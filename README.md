@@ -1,4 +1,9 @@
-# project-nuxt
+# MaPaYa
+makan apa ya ?
+menyediakan berbagai artikel tentang masakan dan juga informasi gizi yang tersedia pada masakan
+
+
+
 
 ## Build Setup
 
