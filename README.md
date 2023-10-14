@@ -3,6 +3,7 @@ makan apa ya ?
 menyediakan berbagai artikel tentang masakan dan juga informasi gizi yang tersedia pada masakan
 
  https://makanapayaa.netlify.app/
+ url api : https://xjjeyccncvvwigqgsrrg.supabase.co
 
 
 
